@@ -1,75 +1,11 @@
+const URL_PIX = "https://api.pexels.com/v1/search?query="
+
 const fetchDogs = () => {
-  fetch("https://api.pexels.com/v1/search?query=dog&per_page=9", {
-    headers: {
-      Authorization: "cdMVQ0LZLKYx2BotqicCd7ymdsfQXPXiuM2VRRzcL6IE2LaWbipEXWjZ",
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        if (response.status === 400) {
-          throw new Error("Bad Request")
-        }
-        if (response.status === 401) {
-          throw new Error("Unauthorized")
-        }
-        if (response.status === 403) {
-          throw new Error("Forbidden")
-        }
-        if (response.status === 404) {
-          throw new Error("Not Found")
-        }
-        if (response.status === 500) {
-          throw new Error("Server Error")
-        }
-
-        throw new Error("Generic Fetch Error")
-      }
-    })
-    .then((dogsData) => {
-      const dogsPhoto = dogsData.photos
-
-      destroyCols()
-      createCards(dogsPhoto)
-    })
+  fetchText("dog")
 }
 
 const fetchCats = () => {
-  fetch("https://api.pexels.com/v1/search?query=cat&per_page=9", {
-    headers: {
-      Authorization: "cdMVQ0LZLKYx2BotqicCd7ymdsfQXPXiuM2VRRzcL6IE2LaWbipEXWjZ",
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        if (response.status === 400) {
-          throw new Error("Bad Request")
-        }
-        if (response.status === 401) {
-          throw new Error("Unauthorized")
-        }
-        if (response.status === 403) {
-          throw new Error("Forbidden")
-        }
-        if (response.status === 404) {
-          throw new Error("Not Found")
-        }
-        if (response.status === 500) {
-          throw new Error("Server Error")
-        }
-
-        throw new Error("Generic Fetch Error")
-      }
-    })
-    .then((catsData) => {
-      catsPhoto = catsData.photos
-
-      destroyCols()
-      createCards(catsPhoto)
-    })
+  fetchText("cat")
 }
 
 const createCards = (array) => {
@@ -159,7 +95,57 @@ const destroyCols = () => {
   })
 }
 
+const fetchText = (text) => {
+  newUrl = URL_PIX + text + "&per_page=9"
+  console.log(newUrl)
+  fetch(newUrl, {
+    headers: {
+      Authorization: "cdMVQ0LZLKYx2BotqicCd7ymdsfQXPXiuM2VRRzcL6IE2LaWbipEXWjZ",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        if (response.status === 400) {
+          throw new Error("Bad Request")
+        }
+        if (response.status === 401) {
+          throw new Error("Unauthorized")
+        }
+        if (response.status === 403) {
+          throw new Error("Forbidden")
+        }
+        if (response.status === 404) {
+          throw new Error("Not Found")
+        }
+        if (response.status === 500) {
+          throw new Error("Server Error")
+        }
+
+        throw new Error("Generic Fetch Error")
+      }
+    })
+    .then((data) => {
+      const photo = data.photos
+
+      destroyCols()
+      createCards(photo)
+    })
+}
+
+const handleSubmitForm = (e) => {
+  e.preventDefault()
+  const inputBox = document.getElementById("inputText")
+  const text = inputBox.value
+  inputBox.value = ""
+
+  fetchText(text)
+}
+
 window.onload = () => {
+  const font = document.querySelector("form")
+  font.addEventListener("submit", handleSubmitForm)
   const btnPrimary = document.getElementById("cat")
   const btnSecondary = document.getElementById("dog")
 
