@@ -25,12 +25,18 @@ const createCards = (array) => {
     const cardContainer = document.createElement("div")
     cardContainer.classList.add("card", "mb-4", "shadow-sm")
 
+    const anchorImg = document.createElement("a")
+    anchorImg.href = "./detail.html?id=" + photo.id
+
     const img = document.createElement("img")
     img.src = card.url
     img.classList.add("bd-placeholder-img", "card-img-top")
 
     const cardBody = document.createElement("div")
     cardBody.classList.add("card-body")
+
+    const anchorH5 = document.createElement("a")
+    anchorH5.href = "./detail.html?id=" + photo.id
 
     const h5 = document.createElement("h5")
     h5.classList.add("card-title")
@@ -67,9 +73,10 @@ const createCards = (array) => {
     small.classList.add("text-muted")
     small.innerText = card.id
 
-    cardContainer.appendChild(img)
-
-    cardBody.appendChild(h5)
+    anchorImg.appendChild(img)
+    cardContainer.appendChild(anchorImg)
+    anchorH5.appendChild(h5)
+    cardBody.appendChild(anchorH5)
     cardBody.appendChild(description)
     btnInnerContainer.appendChild(viewBtn)
     btnInnerContainer.appendChild(hideBtn)
