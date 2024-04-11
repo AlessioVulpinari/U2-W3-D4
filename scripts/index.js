@@ -8,7 +8,7 @@ const fetchCats = () => {
   fetchText("cat")
 }
 
-const createCards = (array) => {
+const createCards = (array, url) => {
   array.forEach((photo) => {
     const card = {
       url: photo.src.original,
@@ -137,7 +137,7 @@ const fetchText = (text) => {
       const photo = data.photos
 
       destroyCols()
-      createCards(photo)
+      createCards(photo, newUrl)
     })
 }
 
