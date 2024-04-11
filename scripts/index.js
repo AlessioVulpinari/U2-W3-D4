@@ -119,10 +119,11 @@ const createCards = (array) => {
     viewBtn.type = "button"
     viewBtn.innerText = "View"
 
-    const editBtn = document.createElement("button")
-    editBtn.classList.add("btn", "btn-sm", "btn-outline-secondary")
-    editBtn.type = "button"
-    editBtn.innerText = "Edit"
+    const hideBtn = document.createElement("button")
+    hideBtn.classList.add("btn", "btn-sm", "btn-outline-secondary")
+    hideBtn.type = "button"
+    hideBtn.innerText = "hide"
+    hideBtn.addEventListener("click", handleHideBtn)
 
     const innerDiv = document.createElement("div")
 
@@ -135,7 +136,7 @@ const createCards = (array) => {
     cardBody.appendChild(h5)
     cardBody.appendChild(description)
     btnInnerContainer.appendChild(viewBtn)
-    btnInnerContainer.appendChild(editBtn)
+    btnInnerContainer.appendChild(hideBtn)
     btnContainer.appendChild(btnInnerContainer)
     innerDiv.appendChild(small)
     btnContainer.appendChild(innerDiv)
@@ -144,6 +145,10 @@ const createCards = (array) => {
     col.appendChild(cardContainer)
     row.appendChild(col)
   })
+}
+
+const handleHideBtn = function (event) {
+  event.target.closest(".col-md-4").remove()
 }
 
 const destroyCols = () => {
